@@ -1,23 +1,34 @@
-import { useState } from 'react';
+import { useState } from "react";
+
+import Modal from "./Modal";
+import Backdrop from "./Backdrop";
 
 function Todo(props) {
+  // call directly in component
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    // call directly in component
-    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+  function deleteHandler() {
+    // console.log("Clicked!");
+    // console.log(props.title);
+    setModalIsOpen(true);
 
-    function deleteHandler() {
-        // console.log("Clicked!");
-        // console.log(props.title);
+  }
+  function closeModalHandler() {
+    setModalIsOpen(false);
+  }
 
-     }
-  
-    return (
-        <div className="card">
-        <h2>{props.title}</h2>
-        <div className="actions">
-            <button className="btn" onClick={deleteHandler}>Delete</button>
-        </div>
-        </div>
-    );
+  return (
+    <div className="card">
+      <h2>{props.title}</h2>
+      <div className="actions">
+        <button className="btn" onClick={deleteHandler}>
+          Delete
+        </button>
+      </div>
+      { modalIsOpen && <Modal onCancel={closeModalHandler} onConfirm={closeModalHandler} /> }
+      { modalIsOpen && <Backdrop onCancel={closeModalHandler}/>}
+      
+    </div>
+  );
 }
 export default Todo;
